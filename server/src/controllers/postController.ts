@@ -28,12 +28,34 @@ export const createPost = async (req: Request, res: Response) => {
 
 
 export const getAllPosts = async (req: Request, res: Response) => {
-    const posts = await prisma.post.findMany({
-      include: {
-        author: true,
-      },
-    });
-    res.json(posts);
+    const {author} = req.query;
+    console.log(author);
+    try {
+      const posts = author?  await prisma.post.findMany({
+        where: {
+          authorId: Number(author),
+        },
+        include: {
+          author: true,
+        },
+        }) :
+        await prisma.post.findMany({
+          include: {
+            author: true,
+          },
+        });
+        res.json(posts);
+
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Failed to fetch posts' });
+    }
+    //   const posts = await prisma.post.findMany({
+    //   include: {
+    //     author: true,
+    //   },
+    // });
+    // res.json(posts);
   };
 
 export const getPostsByAuthor = async (req: Request, res: Response) => {
