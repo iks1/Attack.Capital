@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import jwt from 'jsonwebtoken';
+const JWT_SECRET="SECRET";
 
 const prisma = new PrismaClient();
 
@@ -7,9 +9,8 @@ export const createPost = async (req: Request, res: Response) => {
     const { title, content } = req.body;
     //@ts-ignore
     const userId = req.user?.userId;
-  
     if (!userId) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: 'Unauthorized billa' });
     }
   
     try {
@@ -28,8 +29,18 @@ export const createPost = async (req: Request, res: Response) => {
 
 
 export const getAllPosts = async (req: Request, res: Response) => {
-    const {author} = req.query;
-    //console.log(author);
+    let {author} = req.query;
+
+
+    const token = req.headers.authorization?.split(' ')[1];
+    if(token){
+      const user = jwt.verify(token, JWT_SECRET!);
+      //@ts-ignore
+      author = author? author: user?.userId;
+    }
+
+    // const token = req.cookies.token;
+    // console.log(author);
     try {
       const posts = author?  await prisma.post.findMany({
         where: {
@@ -50,12 +61,6 @@ export const getAllPosts = async (req: Request, res: Response) => {
         console.error('Error fetching posts:', error);
         res.status(500).json({ error: 'Failed to fetch posts' });
     }
-    //   const posts = await prisma.post.findMany({
-    //   include: {
-    //     author: true,
-    //   },
-    // });
-    // res.json(posts);
   };
 
 export const getPostsByAuthor = async (req: Request, res: Response) => {
