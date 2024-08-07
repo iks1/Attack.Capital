@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { useRouter as ROUTER } from 'next/router';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const Navbar = () => {
