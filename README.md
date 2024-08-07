@@ -2,6 +2,8 @@
 
 A full-stack blogging platform built with Node.js, Next.js 14, TypeScript, Prisma, and PostgreSQL, assignment given by `Attack.Capital`.
 
+`Note`: I faced some last minute issue while developing the application, I noticed that the `styled components` that I used for stylling is failling in certain cases, for example changing the browser route manually, so if stylling fails `please restart the client application`. I might fix the issue later but could not right now.
+
 ## Table of Contents
 
 - [Features](#features)
@@ -101,7 +103,7 @@ once accurately done, frontend can be found in `localhost:3000` and backend can 
 
 - I went with `postgres + prisma` because I don't have to code sql and I worked with it before so I know what errors I might encounter. 
 
-- I did not use any UI library and went with `styled components` for UI components so UI might be ugly and I did not have much time to fix this. 
+- I did not use any UI library and went with `styled components` for UI components so UI might be ugly but I tried to do it `responsive`. Since I did not have `figma design`, I tried doing UI by myself
 
 
 
