@@ -10,7 +10,6 @@ const DashboardPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const router = useRouter();
-
   // useEffect(() => {
   //   const fetchPosts = async () => {
   //     try {
@@ -36,19 +35,6 @@ const DashboardPage = () => {
   //     router.push('/login');
   //   }
   // };
-
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://localhost:3001/api/users/logout', {}, { withCredentials: true });
-      localStorage.removeItem('token');
-      setPosts([]);
-      setTitle('');
-      setContent('');
-      router.push('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -98,14 +84,13 @@ const DashboardPage = () => {
   return (
     <Container>
       <Title>Dashboard</Title>
-      <Button onClick={handleLogout}>Logout</Button>
       <FormContainer>
         <Subtitle>Create a new post</Subtitle>
         <Input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" />
         <Textarea value={content} onChange={e => setContent(e.target.value)} placeholder="Content"></Textarea>
         <Button onClick={handlePost}>Post</Button>
       </FormContainer>
-      <PostContainer>
+      <PostsContainer>
         <Subtitle>Your posts</Subtitle>
         {posts.map(post => (
           <PostContainer key={post.id}>
@@ -113,7 +98,7 @@ const DashboardPage = () => {
             <PostContent>{post.content}</PostContent>
           </PostContainer>
         ))}
-      </PostContainer>
+      </PostsContainer>
     </Container>
   );
 };

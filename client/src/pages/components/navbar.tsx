@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
+import { useRouter as ROUTER } from 'next/router';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
+  const [token, setToken]=useState('');
   const router = useRouter();
+  const Router = ROUTER();
 
   const handleLoginClick = () => {
     router.push('/login');
@@ -13,26 +17,34 @@ const Navbar = () => {
     router.push('/signup');
   };
 
-  const handleLogoutClick = async () => {
-    try {
-      await axios.post('http://localhost:3001/api/users/logout', {}, { withCredentials: true });
-      router.push('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    if(Router.pathname==='/dashboard') router.push('/')
+    setToken('');
+};
 
   const handleLogoClick = () => {
     router.push('/');
   };
+  
+  const handleDashboardClick=()=>{
+    router.push('/dashboard');
+  }
+  useEffect(() => {
+    const currToken = localStorage.getItem('token');
+    if(currToken) setToken(currToken);
+  }, [router]);
 
   return (
     <Container>
       <Logo onClick={handleLogoClick}>Blogging Site</Logo>
       <ButtonsContainer>
-        <Button onClick={handleLoginClick}>Login</Button>
         <Button onClick={handleSignupClick}>Signup</Button>
-        <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
+        {
+            (token.length>0)? <LogoutButton onClick={handleLogout}>Logout</LogoutButton> :
+            <Button onClick={handleLoginClick}>Login</Button>
+        }
+        <Button onClick={handleDashboardClick}>Dashboard</Button>
       </ButtonsContainer>
     </Container>
   );
