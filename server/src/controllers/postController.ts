@@ -29,7 +29,7 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const getAllPosts = async (req: Request, res: Response) => {
     const {author} = req.query;
-    console.log(author);
+    //console.log(author);
     try {
       const posts = author?  await prisma.post.findMany({
         where: {

@@ -11,8 +11,8 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const res = await axios.post('http://localhost:3001/api/users/login', { email, password });
-      localStorage.setItem('token', res.data.token);
-      router.push('/dashboard');
+      // localStorage.setItem('token', res.data.token);
+       router.push('/dashboard');
     } catch (error) {
       console.error(error);
     }

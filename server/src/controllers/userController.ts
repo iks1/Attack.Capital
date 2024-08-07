@@ -4,6 +4,12 @@ import bcrypt from "bcryptjs"
 import Jwt from "jsonwebtoken";
 const JWT_SECRET="SECRET";
 
+const COOKIE_OPTIONS = {
+    httpOnly: true,
+    secure: true, 
+    sameSite: 'lax' as const, 
+  };
+
 const prisma = new PrismaClient();
 export const signup = async (req: Request, res: Response) =>{
     const {email, password} = req.body;
@@ -22,5 +28,11 @@ export const login = async(req: Request, res: Response)=>{
     }
 
     const token = Jwt.sign({userId: user.id}, JWT_SECRET!,{expiresIn: '1h'});
+    res.cookie('token', token, { httpOnly: true });
     res.json({token});
 };
+
+export const logout = (req: Request, res: Response) => {
+  res.clearCookie('token', COOKIE_OPTIONS);
+  res.send('Logged out');
+}

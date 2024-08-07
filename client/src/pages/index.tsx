@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { Post } from '@/pages/types';
+import styled from 'styled-components';
 
 type Props = {
   posts: Post[];
@@ -8,7 +9,7 @@ type Props = {
 
 const HomePage = ({ posts }: Props) => {
   return (
-    <div>
+    <Container>
       <h1>All Blog Posts</h1>
 
       <form method="get">
@@ -27,7 +28,7 @@ const HomePage = ({ posts }: Props) => {
           <small>By {post.author.email}</small>
         </div>
       ))}
-    </div>
+    </Container>
   );
 };
 
@@ -44,5 +45,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default HomePage;
+
+
+const Container=styled.div`
+   display:flex;
+   flex-direction:column;
+   justify-content: center;
+   align-items:center;
+
+`
 
 
