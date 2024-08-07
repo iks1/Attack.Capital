@@ -1,6 +1,6 @@
 # Blogging Platform
 
-A full-stack blogging platform built with Node.js, Next.js 14, TypeScript, Prisma, and PostgreSQL, assignment given by `Attack.Capital`.
+A full-stack blogging platform with some predefined features built with Node.js, Next.js 14, TypeScript, Prisma, and PostgreSQL, assignment given by `Attack.Capital`.
 
 `Note`: I faced some last minute issue while developing the application, I noticed that the `styled components` that I used for stylling is failling in certain cases, for example changing the browser route manually, so if stylling fails `please restart the client application`. I might fix the issue later but could not right now.
 
